@@ -68,6 +68,7 @@ module lab2_2_tb_file #(parameter NS = 60, NH = 24);
     .seg_e(H0disp), .seg_f(M1disp),
     .seg_g(M0disp), .seg_h(S1disp),
     .seg_i(S0disp),.Buzz(Buzz));
+
 	begin
 	  #400us Alarmset = 'b1;
 	         Minadv   = 'b1;
@@ -75,9 +76,29 @@ module lab2_2_tb_file #(parameter NS = 60, NH = 24);
 	  #  3us Dayadv   = 'b0;	  // day 1
 	  #  5us Minadv   = 'b0;	  // min 08
 	         Alarmset = 'b0;
-	  $display("alarm should read day = 1, time = 08:10");
 	end
   	join
+    
+
+         Alarmset = 'b1;
+         Minadv   = 'b1;
+  #  17us Minadv = 'b0;
+
+			 Dayadv   = 'b1;
+	  #  5us Dayadv   = 'b0;	  // day 1
+lab2_2_display_tb_file (.seg_j(D0disp), .seg_d(H1disp),
+    .seg_e(H0disp), .seg_f(M1disp),
+    .seg_g(M0disp), .seg_h(S1disp),
+    .seg_i(S0disp),.Buzz(Buzz));
+
+    Alarmset = 'b0;
+    # 1us;
+    for (int i = 0; i < 24; i++) begin 
+        #28800us lab2_2_display_tb_file (.seg_j(D0disp), .seg_d(H1disp),
+    .seg_e(H0disp), .seg_f(M1disp),
+    .seg_g(M0disp), .seg_h(S1disp),
+    .seg_i(S0disp),.Buzz(Buzz));
+    end
   	#1000us  $stop;
   end 
   always begin

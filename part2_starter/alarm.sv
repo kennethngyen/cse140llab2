@@ -6,12 +6,17 @@ module alarm(
                amin,
 			   thrs,
 			   ahrs,						 
+               tdays,
+               adays,
   output logic buzz
 );
 
   always_comb
-    buzz = tmin == amin && thrs == ahrs;
-    /* fill in the guts:
-	buzz = 1 when tmin and thrs match amin and ahrs, respectively */
-
+    if (adays == 7) begin 
+        buzz = tmin == amin && thrs == ahrs;
+    end else if (adays == 6) begin 
+        buzz = tmin == amin && thrs == ahrs && tdays != 0 && tdays != 6;
+    end else begin 
+        buzz = tmin == amin && thrs == ahrs && tdays != adays && tdays != adays + 1;
+    end
 endmodule

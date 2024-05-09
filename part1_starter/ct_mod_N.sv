@@ -1,11 +1,11 @@
 // CSE140L  
 // What does this do? 
 // How long does "ct_max" stay high? 
-module ct_mod_N 
+module ct_mod_N( 
   input             clk, 
                     rst, 	   // synchronous reset ct_out to 0
                     en,		   // enables ct_out increment; else hold
-  input       [6:0] modulus;   // counter runs 0 to modulus-1      
+  input       [6:0] modulus,   // counter runs 0 to modulus-1      
   output logic[6:0] ct_out,	   // counter accumulator and output 
   output logic      ct_max);   // goes high when ct_out = modulus-1
 
@@ -21,7 +21,9 @@ module ct_mod_N
 //   	  ct_out <= ct_out;  // hold; don't enable	 
   end	  :clk_loop
 
-  always_comb begin ct_max = ct_out==(modulus-1); end  // always @(*)   // always @(ct_out)
+    always_comb begin 
+        ct_max = ct_out==(modulus-1); 
+    end  // always @(*)   // always @(ct_out)
 
 endmodule
 

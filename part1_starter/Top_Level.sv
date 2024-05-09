@@ -32,52 +32,56 @@ module Top_Level #(parameter NS=60, NH=24)(
 // minutes counter -- runs at either 1/sec while being set or 1/60sec normally
   ct_mod_N Mct(
 // input ports
-    .clk(), .rst(), .en(TMen), .modulus(),
+    .clk(Pulse), .rst(Reset), .en(S_max || Timeset && Minadv), .modulus(NS),
 // output ports
-    .ct_out(), .ct_max());
-
+    .ct_out(TMin), .ct_max(M_max));
+//advance hours if both seconds and minutes at 59?
+//or enable hours when HrsAdvg == Timeset == 1
+  
 // hours counter -- runs at either 1/sec or 1/60min
   ct_mod_N  Hct(
 // input ports
-	.clk(), .rst(), .en(), .modulus()
+    .clk(Pulse), .rst(Reset), .en(M_max && S_max || Timeset && Hrsadv), .modulus(NH),
 // output ports
-    .ct_out(), .ct_max());
+    .ct_out(THrs), .ct_max(H_max));
 
+  //reset if 23:59:59
+  
 // alarm set registers -- either hold or advance 1/sec while being set
   ct_mod_N Mreg(
 // input ports
-    .clk(), .rst(), .en(AMen), .modulus()   
+    .clk(Pulse), .rst(Reset), .en(Alarmset && Minadv), .modulus(NS),
 // output ports    
     .ct_out(AMin), .ct_max()  ); 
 
   ct_mod_N  Hreg(
 // input ports
-    .clk(), .rst(), .en(), .modulus()
+    .clk(Pulse), .rst(Reset), .en(Alarmset && Hrsadv), .modulus(NH),
 // output ports    
-    .ct_out(), .ct_max() ); 
+    .ct_out(AHrs), .ct_max() ); 
 
 // display drivers (2 digits each, 6 digits total)
   lcd_int Sdisp(					  // seconds display
-    .bin_in    (TSec)  ,
+    .bin_in    (TSec),
 	.Segment1  (S1disp),
 	.Segment0  (S0disp)
 	);
 
   lcd_int Mdisp(
-    .bin_in    (Min),
-	.Segment1  (   ),
-	.Segment0  (   )
+    .bin_in    (TMin),
+    .Segment1  (M1disp),
+    .Segment0  (M0disp)
 	);
 
   lcd_int Hdisp(
-    .bin_in    (Hrs),
-	.Segment1  (   ),
-	.Segment0  (   )
+    .bin_in    (THrs),
+    .Segment1  (H1disp),
+    .Segment0  (H0disp)
 	);
 
 // buzz off :)	  make the connections
   alarm a1(
-    .tmin(), .amin(), .thrs(), .ahrs(), .buzz()
-	);
+    .tmin(TMin), .amin(AMin), .thrs(THrs), .ahrs(AHrs), .buzz(Buzz)
+  );
 
 endmodule

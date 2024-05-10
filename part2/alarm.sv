@@ -13,15 +13,11 @@ module alarm(
 );
 
   always_comb
-  if (enable ==1) begin
       if (adays == 7) begin 
-          buzz = tmin == amin && thrs == ahrs;
+          buzz = tmin == amin && thrs == ahrs && enable;
       end else if (adays == 6) begin 
-          buzz = tmin == amin && thrs == ahrs && tdays != 0 && tdays != 6;
+          buzz = tmin == amin && thrs == ahrs && tdays != 0 && tdays != 6 && enable;
       end else begin 
-          buzz = tmin == amin && thrs == ahrs && tdays != adays && tdays != adays + 1;
+          buzz = tmin == amin && thrs == ahrs && tdays != adays && tdays != adays + 1 && enable;
       end
-    end else begin
-      buzz = 0;
-    end
 endmodule

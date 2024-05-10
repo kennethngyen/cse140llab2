@@ -8,7 +8,7 @@ module Top_Level #(parameter NS=60, NH=24, ND=7, NM=12)(
 		Minadv,
 		Hrsadv,
 		Dayadv,
-        Datadv
+        Datadv,
         Monadv,
 		Alarmon,
 		Pulse,		  // digital clock, assume 1 cycle/sec.

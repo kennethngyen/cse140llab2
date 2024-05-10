@@ -81,7 +81,7 @@ module Top_Level #(parameter NS=60, NH=24)(
 
 // buzz off :)	  make the connections
   alarm a1(
-    .tmin(TMin), .amin(AMin), .thrs(THrs), .ahrs(AHrs), .buzz(Buzz), .enable(Alarmon),
+    .tmin(TMin), .amin(AMin), .thrs(THrs), .ahrs(AHrs), .buzz(Buzz), .enable(Alarmon)
   );
 
 endmodule

@@ -5,12 +5,13 @@ module alarm(
   input[6:0]   tmin,
                amin,
 			   thrs,
-			   ahrs,						 
+			   ahrs,					
+         enable,	 
   output logic buzz
 );
 
   always_comb
-    buzz = tmin == amin && thrs == ahrs;
+    buzz = tmin == amin && thrs == ahrs && enable;
     /* fill in the guts:
 	buzz = 1 when tmin and thrs match amin and ahrs, respectively */
 

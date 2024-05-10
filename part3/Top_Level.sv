@@ -139,7 +139,7 @@ module Top_Level #(parameter NS=60, NH=24, ND=7, NM=12)(
 
 // buzz off :)	  make the connections
   alarm a1(
-    .tmin(TMin), .amin(AMin), .thrs(THrs), .ahrs(AHrs), .tdays(TDays), .adays(ADays), .buzz(Buzz)
+    .tmin(TMin), .amin(AMin), .thrs(THrs), .ahrs(AHrs), .tdays(TDays), .adays(ADays), .buzz(Buzz), .enable(Alarmon)
   );
 
 endmodule

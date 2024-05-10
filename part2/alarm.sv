@@ -8,15 +8,20 @@ module alarm(
 			   ahrs,						 
                tdays,
                adays,
+               enable,
   output logic buzz
 );
 
   always_comb
-    if (adays == 7) begin 
-        buzz = tmin == amin && thrs == ahrs;
-    end else if (adays == 6) begin 
-        buzz = tmin == amin && thrs == ahrs && tdays != 0 && tdays != 6;
-    end else begin 
-        buzz = tmin == amin && thrs == ahrs && tdays != adays && tdays != adays + 1;
+  if (enable ==1) begin
+      if (adays == 7) begin 
+          buzz = tmin == amin && thrs == ahrs;
+      end else if (adays == 6) begin 
+          buzz = tmin == amin && thrs == ahrs && tdays != 0 && tdays != 6;
+      end else begin 
+          buzz = tmin == amin && thrs == ahrs && tdays != adays && tdays != adays + 1;
+      end
+    end else begin
+      buzz = 0;
     end
 endmodule
